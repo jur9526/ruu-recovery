@@ -1,0 +1,37 @@
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Evita clickjacking (embeber el sitio en iframes de otros)
+    X-Frame-Options = "DENY"
+
+    # Evita que el browser adivine el tipo de archivo (MIME sniffing)
+    X-Content-Type-Options = "nosniff"
+
+    # Fuerza HTTPS siempre (1 año)
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+
+    # Controla qué información se envía al hacer click en links externos
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # Deshabilita funciones del browser que no se usan
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+
+    # Content Security Policy — define exactamente qué puede cargar el sitio
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com https://picsum.photos; connect-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self';"
+
+    # Evita XSS en browsers antiguos
+    X-XSS-Protection = "1; mode=block"
+
+# Redirigir www → sin www (SEO + consistencia)
+[[redirects]]
+  from = "https://www.ruurecovery.fit/*"
+  to   = "https://ruurecovery.fit/:splat"
+  status = 301
+  force  = true
+
+# Redirect HTTP → HTTPS (Netlify lo hace automático, pero por si acaso)
+[[redirects]]
+  from   = "http://ruurecovery.fit/*"
+  to     = "https://ruurecovery.fit/:splat"
+  status = 301
+  force  = true
